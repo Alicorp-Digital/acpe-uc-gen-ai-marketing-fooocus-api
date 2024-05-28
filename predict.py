@@ -106,6 +106,8 @@ class Predictor(BasePredictor):
         inpaint_input_mask: Path = Input(
             default=None,
             description="Input mask for inpaint"),
+        inpaint_method: str = Input(default='Balanced', choices=['Balanced', 'Modify Object (add objects, change background, etc.)', 'Improve Detail (face, hand, eyes, etc.)'], 
+            description="Changes the technique used to inpaint"),
         outpaint_selections: str = Input(
             default='',
             description="Outpaint expansion selections, literal 'Left', 'Right', 'Top', 'Bottom' separated by comma"),
@@ -275,6 +277,7 @@ class Predictor(BasePredictor):
             upscale_value=uov_upscale_value,
             outpaint_selections=outpaint_selections_arr,
             inpaint_input_image=inpaint_input_image_dict,
+            inpaint_method=inpaint_method,
             image_prompts=image_prompts,
             advanced_params=advanced_params,
             inpaint_additional_prompt=inpaint_additional_prompt,

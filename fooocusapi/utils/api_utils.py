@@ -125,12 +125,15 @@ def req_to_params(req: Text2ImgRequest) -> ImageGenerationParams:
 
     inpaint_input_image = None
     inpaint_additional_prompt = None
+    inpaint_method = None
     if isinstance(req, (ImgInpaintOrOutpaintRequest, ImgInpaintOrOutpaintRequestJson)) and req.input_image is not None:
         inpaint_additional_prompt = req.inpaint_additional_prompt
         input_image = read_input_image(req.input_image)
         input_mask = None
         if req.input_mask is not None:
             input_mask = read_input_image(req.input_mask)
+        if req.inpaint_method is not None:
+            inpaint_method = req.inpaint_method
         inpaint_input_image = {
             'image': input_image,
             'mask': input_mask
@@ -209,6 +212,7 @@ def req_to_params(req: Text2ImgRequest) -> ImageGenerationParams:
         save_name=req.save_name,
         save_extension=req.save_extension,
         require_base64=req.require_base64,
+        inpaint_method=inpaint_method
     )
 
 
